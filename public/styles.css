@@ -14,3 +14,28 @@ nav{
     justify-content: center;
     align-items: center;
 }
+.imgComics{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgComics img{
+    width: 100px;
+}
+#modal-body{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+}
+#modal-body .imgComics{
+    max-width: 10vw;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
