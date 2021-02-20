@@ -24,18 +24,21 @@ nav{
 .imgComics img{
     width: 100px;
 }
-#modal-body{
+#modal-body, #more-modal-body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
 
 }
-#modal-body .imgComics{
+#modal-body .imgComics, #more-modal-body .imgComics{
     max-width: 10vw;
     margin: 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+#more-modal-body{
+    display: none;
 }

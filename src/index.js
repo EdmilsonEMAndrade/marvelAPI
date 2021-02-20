@@ -2,14 +2,33 @@ import Characters from './controller/characters'
 import Comic from './controller/comic'
 class App {
     constructor() {
+        this.initApp();
         this.btnPage = document.querySelector('.pagination');
         this.links = document.getElementsByClassName('page-link');
         this.divImgs = document.getElementById('imgs');
         this.imgHeros = document.getElementsByClassName('imgHero');
         this.modal = document.getElementById('marvelCharacterModal');
+        this.divMoreHq = document.getElementById('more-modal-body');
 
         this.limit = 50;
-        this.initApp();
+        this.showMoreHq = false;
+
+    }
+
+    showMoreComic() {
+
+
+        if (this.showMoreHq) {
+            document.getElementById('more-modal-body').style.display = `none`;
+            document.getElementById('more').innerHTML = `+`
+        } else {
+            document.getElementById('more-modal-body').style.display = `flex`;
+            document.getElementById('more').innerHTML = `-`
+        }
+
+        this.showMoreHq = !this.showMoreHq;
+
+
 
     }
     async initApp() {
@@ -18,10 +37,22 @@ class App {
         this.page(heros.total);
     };
     getCharacterComics(comics) {
+        let counter = 0
         comics.forEach(async element => {
             const hq = await Comic.getComic(element.resourceURI)
-            this.showComic(hq.results[0])
+            if (counter < 3) {
+                this.showComic(hq.results[0]);
+            } else {
+                this.moreComic(hq.results[0]);
+            };
+            counter++;
+            if (counter < 4) {
+                document.getElementById('more').style.display = `none`
+            } else {
+                document.getElementById('more').style.display = `flex`
+            }
         })
+
 
     };
     async newPage(offset = 0) {
@@ -30,23 +61,25 @@ class App {
     };
     showCharacters(data) {
         this.divImgs.innerHTML = ``;
-        let contador = 0;
+        let counter = 0;
         data.forEach(element => {
             let img;
             if (element.thumbnail.path != "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available" && element.thumbnail.path != 'http://i.annihil.us/u/prod/marvel/i/mg/f/60/4c002e0305708') {
-                img = `<a href="#" data-bs-toggle="modal" data-bs-target="#marvelCharacterModal"><img class="imgHero" data-position="${contador}" width="10vw" height="100px" src="${element.thumbnail.path}.${element.thumbnail.extension}" title="${element.name}" alt="${element.name}"/></a>`
+                img = `<a href="#" data-bs-toggle="modal" data-bs-target="#marvelCharacterModal"><img class="imgHero" data-position="${counter}" width="10vw" height="100px" src="${element.thumbnail.path}.${element.thumbnail.extension}" title="${element.name}" alt="${element.name}"/></a>`
             } else {
-                img = `<a href="#" data-bs-toggle="modal" data-bs-target="#marvelCharacterModal"><img class="imgHero" data-position="${contador}"width="10vw" height="100px" src="/img/marvel.png" title="${element.name}" alt="${element.name}"/></a>`
+                img = `<a href="#" data-bs-toggle="modal" data-bs-target="#marvelCharacterModal"><img class="imgHero" data-position="${counter}"width="10vw" height="100px" src="/img/marvel.png" title="${element.name}" alt="${element.name}"/></a>`
             };
 
             this.divImgs.innerHTML += `${img} `;
-            contador++;
+            counter++;
 
         });
         for (const hero of this.imgHeros) {
             hero.onclick = event => {
                 let index = event.target.dataset.position;
                 let comics = data[index].comics.items;
+                this.showMoreHq = false;
+
                 document.getElementById("modal-body").innerHTML = '';
                 //console.log(Comic.getComic(data[index].comics.items[0].resourceURI))
 
@@ -63,8 +96,13 @@ class App {
                   ${data[index].description}
                   </div>
                   <hr><h5 class="modal-title" id="exampleModalLabel">HQs</h5>
-                  <div id="modal-body">
-                    
+                  <div id="modal-body">               
+                  </div>
+
+                    <div class="modal-body d-flex justify-content-center">
+                        <button type="button" class="btn btn-secondary" id="more">+</button>
+                   </div>
+                   <div id="more-modal-body">               
                   </div>
                   
                   <div class="modal-footer">
@@ -72,7 +110,9 @@ class App {
                   </div>
                 </div>
               </div>`;
+                document.getElementById('more-modal-body').style.display = `none`;
                 this.getCharacterComics(comics)
+                document.getElementById('more').onclick = () => this.showMoreComic();
 
             };
         };
@@ -86,6 +126,13 @@ class App {
             <img src="${results.thumbnail.path}.${results.thumbnail.extension}" alt="Marvel">
             </div>`
 
+    }
+    moreComic(results) {
+        document.getElementById('more-modal-body').innerHTML +=
+            `<div class="imgComics">
+            <h6>${results.title}</h6>
+            <img src="${results.thumbnail.path}.${results.thumbnail.extension}" alt="Marvel">
+            </div>`
     }
     page(total) {
         const pages = Math.ceil(total / this.limit);
