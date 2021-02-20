@@ -1,0 +1,16 @@
+#imgs{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    
+}
+#imgs img{
+    height: 9.8vw;
+    width: 9.8vw;
+}
+nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
