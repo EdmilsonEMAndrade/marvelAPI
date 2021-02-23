@@ -12,11 +12,33 @@
 
 <body>
 
+  <header>
+    <img src="./img/MarvelLogo.svg" alt="Marvel">
+  </header>
+
+  <div id="search">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Character" aria-label="Character"
+        aria-describedby="button-addon2">
+      <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+    </div>
+  </div>
+
+  <div id="results">
+    <p>Results </p>
+    <span>-</span>
+    <a class="results">50</a>
+    <span>-</span>
+    <a class="results">80</a>
+    <span>-</span>
+    <a class="results">100</a>
+  </div>
+
   <div id="imgs"></div>
+
   <nav>
     <ul class="pagination"></ul>
   </nav>
-
 
   <!-- Modal -->
   <div class="modal fade" id="marvelCharacterModal" tabindex="-1" aria-labelledby="exampleModalLabel"

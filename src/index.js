@@ -9,15 +9,14 @@ class App {
         this.imgHeros = document.getElementsByClassName('imgHero');
         this.modal = document.getElementById('marvelCharacterModal');
         this.divMoreHq = document.getElementById('more-modal-body');
-
+        this.btnResults = document.getElementsByClassName("results")
         this.limit = 50;
         this.showMoreHq = false;
+
 
     }
 
     showMoreComic() {
-
-
         if (this.showMoreHq) {
             document.getElementById('more-modal-body').style.display = `none`;
             document.getElementById('more').innerHTML = `+`
@@ -27,17 +26,18 @@ class App {
         }
 
         this.showMoreHq = !this.showMoreHq;
+    };
 
-
-
-    }
     async initApp() {
         const heros = await Characters.getResults(0, this.limit);
+        this.results();
         this.showCharacters(heros.results);
         this.page(heros.total);
     };
+
     getCharacterComics(comics) {
         let counter = 0
+        document.getElementById('more').style.display = `none`
         comics.forEach(async element => {
             const hq = await Comic.getComic(element.resourceURI)
             if (counter < 3) {
@@ -46,15 +46,12 @@ class App {
                 this.moreComic(hq.results[0]);
             };
             counter++;
-            if (counter < 4) {
-                document.getElementById('more').style.display = `none`
-            } else {
+            if (counter > 3) {
                 document.getElementById('more').style.display = `flex`
             }
-        })
-
-
+        });
     };
+
     async newPage(offset = 0) {
         const personagem = await Characters.getResults(offset, this.limit);
         this.showCharacters(personagem.results);
@@ -135,10 +132,11 @@ class App {
             </div>`
     }
     page(total) {
-        const pages = Math.ceil(total / this.limit);
+        const pages = Math.round(total / this.limit);
+        console.log(pages)
         this.btnPage.innerHTML = ``;
 
-        for (let index = 1; index < pages; index++) {
+        for (let index = 1; index < pages + 1; index++) {
             const li = ` <li class="page-item"><a class="page-link" href="#" data-page="${index}">${index}</a></li>`;
             this.btnPage.innerHTML += li;
         };
@@ -147,7 +145,28 @@ class App {
             link.onclick = event => {
                 const pageN = event.target.dataset.page;
                 const offset = ((parseInt(pageN) - 1) * this.limit);
+                console.log(offset)
                 this.newPage(offset);
+            };
+        };
+    };
+    results() {
+        for (const btnResult of this.btnResults) {
+            btnResult.onclick = () => {
+                const number = parseInt(btnResult.innerHTML);
+                if (this.limit != number) {
+                    this.limit = number;
+                    this.initApp();
+                };
+            };
+        };
+        for (const btnResult of this.btnResults) {
+            if (this.limit === parseInt(btnResult.innerHTML)) {
+                btnResult.style.color = `grey`;
+                btnResult.style.cursor = `not-allowed`;
+            } else {
+                btnResult.style.color = `blue`;
+                btnResult.style.cursor = `pointer`;
             };
         };
     };

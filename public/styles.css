@@ -1,19 +1,56 @@
+*,html, body{
+    
+font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+    
+}
+
+a:hover{
+    cursor: pointer;
+}
+
+header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header img{
+    margin: 2px;
+    height: 20vh;
+}
+
+#search{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 5px;
+}
+
+#results{
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px;
+}
+
 #imgs{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    
+    align-items: center;    
 }
+
 #imgs img{
     height: 9.8vw;
     width: 9.8vw;
 }
+
 nav{
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .imgComics{
     display: flex;
     flex-direction: column;
@@ -24,6 +61,7 @@ nav{
 .imgComics img{
     width: 100px;
 }
+
 #modal-body, #more-modal-body {
     display: flex;
     flex-wrap: wrap;
@@ -31,6 +69,7 @@ nav{
     align-items: center;
 
 }
+
 #modal-body .imgComics, #more-modal-body .imgComics{
     max-width: 10vw;
     margin: 5px;
@@ -39,6 +78,7 @@ nav{
     justify-content: center;
     align-items: center;
 }
+
 #more-modal-body{
     display: none;
 }
