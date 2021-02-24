@@ -9,9 +9,9 @@ font-family: 'Lato', sans-serif;
 a:hover{
     cursor: pointer;
 }
-#button-addon2{
+/* #button-addon2{
     cursor: not-allowed;
-}
+} */
 
 header{
     display: flex;
@@ -30,10 +30,11 @@ header img{
     padding-right: 5px;
 }
 
-#results{
+#results, #total{
     display: flex;
     justify-content: flex-end;
-    padding: 5px;
+    padding: 6px;
+    height  : 25px;
 }
 
 #imgs{

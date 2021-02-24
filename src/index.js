@@ -1,5 +1,7 @@
 import Characters from './controller/characters'
 import Comic from './controller/comic'
+
+
 class App {
     constructor() {
         this.initApp();
@@ -8,12 +10,12 @@ class App {
         this.divImgs = document.getElementById('imgs');
         this.imgHeros = document.getElementsByClassName('imgHero');
         this.modal = document.getElementById('marvelCharacterModal');
-        this.divMoreHq = document.getElementById('more-modal-body');
-        this.btnResults = document.getElementsByClassName("results")
+        this.divTotal = document.getElementById("total");
+        this.btnResults = document.getElementsByClassName("results");
+        this.btnSearch = document.getElementById("button-addon2");
+        this.inputSearch = document.getElementById("searchCharacter")
         this.limit = 50;
         this.showMoreHq = false;
-
-
     }
 
     showMoreComic() {
@@ -33,6 +35,22 @@ class App {
         this.results();
         this.showCharacters(heros.results);
         this.page(heros.total);
+        this.divTotal.innerHTML = `<p>Total characters ${heros.total}</p>`;
+        this.search()
+    };
+
+    async searchCharacterInit(name) {
+        const heros = await Characters.getSearch(name);
+        this.showCharacters(heros.results);
+        this.page(heros.total);
+        this.divTotal.innerHTML = `<p>Total characters ${heros.total}</p>`;
+        this.search()
+    };
+
+    search() {
+        this.btnSearch.onclick = () => {
+            this.searchCharacterInit(this.inputSearch.value);
+        };
     };
 
     getCharacterComics(comics) {
@@ -78,7 +96,6 @@ class App {
                 this.showMoreHq = false;
 
                 document.getElementById("modal-body").innerHTML = '';
-                //console.log(Comic.getComic(data[index].comics.items[0].resourceURI))
 
                 this.modal.innerHTML = `<div class="modal-dialog">
                 <div class="modal-content">
@@ -133,7 +150,6 @@ class App {
     }
     page(total) {
         const pages = Math.round(total / this.limit);
-        console.log(pages)
         this.btnPage.innerHTML = ``;
 
         for (let index = 1; index < pages + 1; index++) {
@@ -145,7 +161,6 @@ class App {
             link.onclick = event => {
                 const pageN = event.target.dataset.page;
                 const offset = ((parseInt(pageN) - 1) * this.limit);
-                console.log(offset)
                 this.newPage(offset);
             };
         };

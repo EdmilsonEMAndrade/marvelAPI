@@ -15,6 +15,14 @@ class Characters {
             console.log(error);
         };
     };
+    async getSearch(characterName) {
+        try {
+            const characters = await urlMarvel.get(`/characters${key}&nameStartsWith=${characterName}`);
+            return characters.data.data;
+        } catch (error) {
+            console.log(error);
+        };
+    }
 };
 
 export default new Characters();
