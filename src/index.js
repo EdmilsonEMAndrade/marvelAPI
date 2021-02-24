@@ -40,15 +40,18 @@ class App {
     };
 
     async searchCharacterInit(name) {
-        const heros = await Characters.getSearch(name);
+        const heros = await Characters.getSearch(name, this.limit);
         this.showCharacters(heros.results);
-        this.page(heros.total);
-        this.divTotal.innerHTML = `<p>Total characters ${heros.total}</p>`;
+        this.page(heros.results.length);
+        this.divTotal.innerHTML = `<p>Total characters ${heros.results.length}</p>`;
         this.search()
     };
 
     search() {
         this.btnSearch.onclick = () => {
+            this.searchCharacterInit(this.inputSearch.value);
+        };
+        this.btnSearch.onkeypress = () => {
             this.searchCharacterInit(this.inputSearch.value);
         };
     };
@@ -151,7 +154,9 @@ class App {
     page(total) {
         const pages = Math.round(total / this.limit);
         this.btnPage.innerHTML = ``;
-
+        if (pages === 1) {
+            return;
+        };
         for (let index = 1; index < pages + 1; index++) {
             const li = ` <li class="page-item"><a class="page-link" href="#" data-page="${index}">${index}</a></li>`;
             this.btnPage.innerHTML += li;

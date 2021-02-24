@@ -15,9 +15,9 @@ class Characters {
             console.log(error);
         };
     };
-    async getSearch(characterName) {
+    async getSearch(characterName, limit) {
         try {
-            const characters = await urlMarvel.get(`/characters${key}&nameStartsWith=${characterName}`);
+            const characters = await urlMarvel.get(`/characters${key}&nameStartsWith=${characterName}&limit=${limit}`);
             return characters.data.data;
         } catch (error) {
             console.log(error);
