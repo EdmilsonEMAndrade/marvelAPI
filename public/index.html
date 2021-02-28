@@ -12,7 +12,7 @@
 
 <body>
 
-  <header>
+  <header id="marvelHeader">
     <img src="./img/MarvelLogo.svg" alt="Marvel">
   </header>
 
@@ -48,17 +48,22 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="characterName">Nome</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body d-flex justify-content-center" id="imgCharacter">
+
+        </div>
+        <div class="modal-body" id="descrition">
           ...
         </div>
-        <div id="modal-body"></div>
-        <div class="modal-body">
-          <button type="button" class="btn btn-secondary" id="more">+</button>
+        <hr>
+        <h5 class="modal-title" id="exampleModalLabel">Comics</h5>
+        <div id="characterComic"></div>
+        <div class="modal-body d-flex justify-content-center">
+          <button type="button" class="btn btn-secondary" id="moreComics">+</button>
         </div>
-        <div id="more-modal-body">
+        <div id="characterMoreComics">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
