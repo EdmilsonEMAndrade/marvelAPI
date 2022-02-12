@@ -90,6 +90,9 @@ class App {
         for (const hero of this.imgHeros) {
             hero.onclick = event => {
                 const index = event.target.dataset.position;
+                gtag("event", "hero", {
+                    value: `${data[index].name}`
+                  });
                 this.showModal(data[index]);
             }
         }
