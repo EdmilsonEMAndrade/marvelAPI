@@ -90,16 +90,16 @@ class App {
         for (const hero of this.imgHeros) {
             hero.onclick = event => {
                 const index = event.target.dataset.position;
-                gtag("event", "hero", {
-                    value: `${data[index].name}`
-                  });
-                this.showModal(data[index]);
+               this.showModal(data[index]);
             }
         }
     };
 
     showModal(data) {
         console.log(data)
+        gtag("event", "hero", {
+                    value: `${data.name}`
+        });
         //character info
         this.modalCharacterName.innerHTML = `${data.name}`;
         this.modalCharacterImg.innerHTML = `<img class="imgHero" width="180px" src="${data.thumbnail.path}.${data.thumbnail.extension}" title="${data.name}" alt="${data.name}"/>`;
